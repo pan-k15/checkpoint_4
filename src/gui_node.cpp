@@ -137,14 +137,14 @@ void CVUIROSCmdVelPublisher::run() {
                  odom_msg_.pose.pose.position.z);
 
     // --------------------- Call Distance Service ---------------------
-    // std::string distance_message_ = "N/A";
+    std::string distance_message_ = "N/A";
 
     if (cvui::button(frame, 50, 520, "Call Distance")) {
       ros::ServiceClient client =
           nh_.serviceClient<std_srvs::Trigger>("get_distance");
       std_srvs::Trigger srv;
       if (client.call(srv)) {
-        std::string distance_message_ =
+       distance_message_ =
             srv.response.message; // store latest message
 
         ROS_INFO_STREAM("Distance traveled: " << srv.response.message);
@@ -168,6 +168,19 @@ void CVUIROSCmdVelPublisher::run() {
     cvui::window(frame, 190, 500, 200, 100, "Distance in meters");
     // cvui::printf(frame, 200, 530, 0.4, 0xff0000, "%s",
     //            distance_message_.c_str());
+
+// --------------------- Reset Distance Service ---------------------
+if (cvui::button(frame, 50, 560, "Reset Distance")) {
+    ros::ServiceClient client = nh_.serviceClient<std_srvs::Trigger>("reset_distance");
+    std_srvs::Trigger srv;
+    if (client.call(srv)) {
+        distance_message_ = "0.00"; // immediately reflect reset
+        ROS_INFO("Distance reset successfully.");
+    } else {
+        distance_message_ = "Reset failed!";
+        ROS_ERROR("Failed to call service reset_distance");
+    }
+}
 
     cvui::update();
     cv::imshow(WINDOW_NAME_, frame);
