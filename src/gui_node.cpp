@@ -133,15 +133,15 @@ void CVUIROSCmdVelPublisher::run() {
 
     // --------------------- Odometry Display ---------------------
     cvui::window(frame, 10, 490, 80, 80, "X");
-    cvui::printf(frame, 30, 520, 0.8, 0xff0000, "%.2f",
+    cvui::printf(frame, 30, 520, 0.5, 0xff0000, "%.2f",
                  odom_msg_.pose.pose.position.x);
 
     cvui::window(frame, 100, 490, 80, 80, "Y");
-    cvui::printf(frame, 120, 520, 0.8, 0xff0000, "%.2f",
+    cvui::printf(frame, 110, 520, 0.5, 0xff0000, "%.2f",
                  odom_msg_.pose.pose.position.y);
 
     cvui::window(frame, 190, 490, 80, 80, "Z");
-    cvui::printf(frame, 210, 520, 0.8, 0xff0000, "%.2f",
+    cvui::printf(frame, 210, 520, 0.5, 0xff0000, "%.2f",
                  odom_msg_.pose.pose.position.z);
 
     // --------------------- Call Distance Service ---------------------
